@@ -33,8 +33,8 @@ G4VPhysicalVolume* Detector::CreateWorld() {
 	new G4PVPlacement(nullptr, G4ThreeVector(0., 0., targetWidth / 2),
 			targetLog, "TargetPhys", worldLog, false, 0);
 
-	auto const worldPhys = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.),
-			worldLog, "WorldPhys", 0, false, 0);
+	auto const worldPhys = new G4PVPlacement(nullptr, G4ThreeVector(0., 0., 0.),
+			worldLog, "WorldPhys", nullptr, false, 0);
 
 	return worldPhys;
 }
