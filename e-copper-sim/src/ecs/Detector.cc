@@ -6,6 +6,7 @@
 #include <G4VisAttributes.hh>
 
 #include <ecs/Detector.hh>
+#include <lhcs/repository/Colours.hh>
 
 namespace ecs {
 
@@ -21,13 +22,14 @@ G4VPhysicalVolume* Detector::CreateWorld() {
 	auto const worldLog = new G4LogicalVolume(worldSolid,
 			nist->FindOrBuildMaterial("G4_Galactic"), "World");
 	worldLog->SetVisAttributes(
-			G4VisAttributes(true, FromRGBA(116, 231, 238, 32)));
+			G4VisAttributes(true, lhcs::repository::Colours::Air()));
 
 	auto const targetSolid = new G4Tubs("TargetSolid", 0. * cm, wordRadius,
 			targetWidth / 2, 0. * deg, 360. * deg);
 	auto const targetLog = new G4LogicalVolume(targetSolid,
 			nist->FindOrBuildMaterial("G4_Cu"), "Target");
-	targetLog->SetVisAttributes(G4VisAttributes(FromRGB(184, 115, 51)));
+	targetLog->SetVisAttributes(
+			G4VisAttributes(lhcs::repository::Colours::Copper()));
 	new G4PVPlacement(nullptr, G4ThreeVector(0., 0., 0.), targetLog,
 			"TargetPhys", worldLog, false, 0);
 
@@ -35,18 +37,6 @@ G4VPhysicalVolume* Detector::CreateWorld() {
 			worldLog, "WorldPhys", 0, false, 0);
 
 	return worldPhys;
-}
-
-G4Colour Detector::FromRGB(short const red, short const green,
-		short const blue) {
-	const G4double m = 1.0 / 255.0;
-	return G4Colour(m * red, m * green, m * blue);
-}
-
-G4Colour Detector::FromRGBA(short const red, short const green,
-		short const blue, short const alpha) {
-	const G4double m = 1.0 / 255.0;
-	return G4Colour(m * red, m * green, m * blue, m * alpha);
 }
 
 G4VPhysicalVolume* Detector::Construct() {
