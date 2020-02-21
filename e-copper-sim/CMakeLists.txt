@@ -2,7 +2,7 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(ECopperSim VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "Geant4-based simulation of electron-induced copper films")
+project(ECopperSim VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "Geant4-based simulation of electron-induced thin copper foils")
 
 #include(GNUInstallDirs)
 set (CMAKE_CXX_STANDARD 14)

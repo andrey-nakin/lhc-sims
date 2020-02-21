@@ -6,8 +6,9 @@
 #include <G4UImanager.hh>
 #include <G4VisExecutive.hh>
 #include <G4UIExecutive.hh>
+#include <QGSP_BERT.hh>
 
-namespace ecs {
+#include <ecs/Detector.hh>
 
 class Application {
 public:
@@ -19,7 +20,7 @@ public:
 	void printBanner() {
 		G4cout << G4endl
 				<< "*************************************************************"
-				<< G4endl << "Simulation of electron-induced copper films"
+				<< G4endl << "Simulation of electron-induced thin copper foils"
 				<< G4endl << "Copyright Andrey Nakin <andrey.nakin@mail.ru>"
 				<< G4endl
 				<< "*************************************************************"
@@ -35,6 +36,9 @@ public:
 #else
 		G4RunManager runManager;
 #endif
+
+		runManager.SetUserInitialization(new ecs::Detector);
+	    runManager.SetUserInitialization(new QGSP_BERT());
 
 		auto uiManager = G4UImanager::GetUIpointer();
 
@@ -56,10 +60,8 @@ public:
 
 };
 
-}
-
 int main(int argc, char* argv[]) {
-	ecs::Application app;
+	Application app;
 	app.run(argc, argv);
 	return 0;
 
