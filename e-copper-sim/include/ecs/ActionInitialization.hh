@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <G4VUserActionInitialization.hh>
 
 #include <ecs/Detector.hh>
