@@ -1,0 +1,10 @@
+/run/initialize
+
+# Specify particle source
+/gps/energy 1.0 MeV
+/gps/particle e-
+/gps/direction 0. 0. 1.
+/gps/pos/centre 0. 0. 0. cm
+
+/run/beamOn 1000
+
