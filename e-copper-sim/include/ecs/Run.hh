@@ -30,8 +30,6 @@
 #include "G4THitsMap.hh"
 #include <map>
 
-class G4Event;
-
 namespace ecs {
 
 class Run: public G4Run {
@@ -40,8 +38,8 @@ public:
 	Run();
 	~Run() override;
 
-	void RecordEvent(const G4Event*) override;
-	void Merge(const G4Run*) override;
+	void RecordEvent(G4Event const*) override;
+	void Merge(G4Run const*) override;
 	void DumpData(G4String const&) const;
 
 private:

@@ -46,10 +46,10 @@ void RunAction::EndOfRunAction(G4Run const* aRun) {
 	G4cout << "Number of Events Processed:" << aRun->GetNumberOfEvent()
 			<< G4endl;
 
-	const Run* theRun = dynamic_cast<const Run*>(aRun);
-	assert(0 != theRun);
+	// TODO const Run* theRun = dynamic_cast<const Run*>(aRun);
+	// TODO assert(0 != theRun);
 
-	theRun->DumpData(fOutputFileSpec);
+	// TODO theRun->DumpData(fOutputFileSpec);
 }
 
 }

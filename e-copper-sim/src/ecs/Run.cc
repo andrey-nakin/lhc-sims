@@ -51,7 +51,7 @@ Run::~Run() {
 	}
 }
 
-void Run::RecordEvent(const G4Event* anEvent) {
+void Run::RecordEvent(G4Event const* anEvent) {
 	// Get the hits collection
 	G4HCofThisEvent* eventHitCollection = anEvent->GetHCofThisEvent();
 
