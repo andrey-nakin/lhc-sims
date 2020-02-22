@@ -28,6 +28,7 @@
 #include "ecs/ActionInitialization.hh"
 #include "ecs/RunAction.hh"
 #include "ecs/PrimaryGeneratorAction.hh"
+#include "ecs/SteppingAction.hh"
 
 namespace ecs {
 
@@ -42,6 +43,7 @@ void ActionInitialization::BuildForMaster() const {
 void ActionInitialization::Build() const {
 	SetUserAction(new RunAction(fOutputFileSpec));
 	SetUserAction(new PrimaryGeneratorAction);
+	SetUserAction(new SteppingAction);
 }
 
 }

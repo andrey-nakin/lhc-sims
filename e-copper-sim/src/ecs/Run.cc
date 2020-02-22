@@ -35,6 +35,9 @@ namespace ecs {
 
 Run::Run() :
 		G4Run(), fMap() {
+
+	G4cout << "Run::Run()" << G4endl;
+
 	fMap[0] = new G4THitsMap<G4double>("MyDetector", "cell flux");
 	fMap[1] = new G4THitsMap<G4double>("MyDetector", "e cell flux");
 	fMap[2] = new G4THitsMap<G4double>("MyDetector", "population");
@@ -52,6 +55,10 @@ Run::~Run() {
 }
 
 void Run::RecordEvent(G4Event const* anEvent) {
+	G4cout << "Run::RecordEvent(" << anEvent->GetEventID() << ", "
+			<< anEvent->GetPrimaryVertex()->GetPrimary()->GetParticleDefinition()->GetParticleName()
+			<< ")" << G4endl;
+
 	// Get the hits collection
 	G4HCofThisEvent* eventHitCollection = anEvent->GetHCofThisEvent();
 
