@@ -81,7 +81,7 @@ void Run::RecordEvent(const G4Event* anEvent) {
 	G4Run::RecordEvent(anEvent);
 }
 
-void Run::DumpData(G4String &outputFileSpec) const {
+void Run::DumpData(G4String const& outputFileSpec) const {
 	// Titles
 	std::vector < G4String > title;
 	title.push_back("Radius");
@@ -130,7 +130,7 @@ void Run::DumpData(G4String &outputFileSpec) const {
 
 void Run::Print(const std::vector<G4String>& title,
 		const std::map<G4int, std::vector<G4double> >&myMap,
-		G4String &outputFileSpec) const {
+		G4String const& outputFileSpec) const {
 	// Print to G4cout and an output file
 	std::ofstream outFile(outputFileSpec);
 

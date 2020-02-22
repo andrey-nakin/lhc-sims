@@ -27,14 +27,11 @@
 
 #include "G4VUserActionInitialization.hh"
 
-//class G4GeneralParticleSource;
-
 namespace ecs {
 
 class ActionInitialization: public G4VUserActionInitialization {
 public:
 	ActionInitialization(const G4String&);
-	~ActionInitialization() override;
 
 	void BuildForMaster() const override;
 	void Build() const override;

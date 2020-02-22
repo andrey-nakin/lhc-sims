@@ -35,9 +35,6 @@ ActionInitialization::ActionInitialization(const G4String& outputFile) :
 		G4VUserActionInitialization(), fOutputFileSpec(outputFile) {
 }
 
-ActionInitialization::~ActionInitialization() {
-}
-
 void ActionInitialization::BuildForMaster() const {
 	SetUserAction(new RunAction(fOutputFileSpec));
 }

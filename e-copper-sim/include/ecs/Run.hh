@@ -38,15 +38,16 @@ class Run: public G4Run {
 
 public:
 	Run();
-	virtual ~Run();
+	~Run() override;
 
-	virtual void RecordEvent(const G4Event*);
-	virtual void Merge(const G4Run*);
-	void DumpData(G4String&) const;
+	void RecordEvent(const G4Event*) override;
+	void Merge(const G4Run*) override;
+	void DumpData(G4String const&) const;
 
 private:
 	void Print(const std::vector<G4String>& title,
-			const std::map<G4int, std::vector<G4double> >&out, G4String&) const;
+			const std::map<G4int, std::vector<G4double> >&out,
+			G4String const&) const;
 
 	std::map<G4int, G4THitsMap<G4double>*> fMap;
 };

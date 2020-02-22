@@ -36,14 +36,14 @@ class RunAction: public G4UserRunAction {
 
 public:
 	RunAction(const G4String&);
-	virtual ~RunAction();
+	~RunAction() override;
 
-	virtual G4Run* GenerateRun();
+	G4Run* GenerateRun() override;
 
-	virtual void EndOfRunAction(const G4Run*);
+	void EndOfRunAction(const G4Run*) override;
 
 private:
-	G4String fOutputFileSpec;
+	G4String const fOutputFileSpec;
 };
 
 }
