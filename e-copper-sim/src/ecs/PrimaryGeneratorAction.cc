@@ -1,6 +1,3 @@
-#include "G4Event.hh"
-#include "G4GeneralParticleSource.hh"
-
 #include "ecs/PrimaryGeneratorAction.hh"
 
 namespace ecs {
