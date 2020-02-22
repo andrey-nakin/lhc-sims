@@ -35,12 +35,11 @@ namespace ecs {
 class RunAction: public G4UserRunAction {
 
 public:
-	RunAction(const G4String&);
-	~RunAction() override;
+	RunAction(G4String const&);
 
 	G4Run* GenerateRun() override;
 
-	void EndOfRunAction(const G4Run*) override;
+	void EndOfRunAction(G4Run const*) override;
 
 private:
 	G4String const fOutputFileSpec;

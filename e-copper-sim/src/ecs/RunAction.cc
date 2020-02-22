@@ -32,19 +32,16 @@
 
 namespace ecs {
 
-RunAction::RunAction(const G4String& outputFile) :
+RunAction::RunAction(G4String const& outputFile) :
 		G4UserRunAction(), fOutputFileSpec(outputFile) {
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
-}
-
-RunAction::~RunAction() {
 }
 
 G4Run* RunAction::GenerateRun() {
 	return new Run();
 }
 
-void RunAction::EndOfRunAction(const G4Run* aRun) {
+void RunAction::EndOfRunAction(G4Run const* aRun) {
 
 	G4cout << "Number of Events Processed:" << aRun->GetNumberOfEvent()
 			<< G4endl;
