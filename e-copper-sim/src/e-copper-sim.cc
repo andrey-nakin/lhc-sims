@@ -6,9 +6,10 @@
 #include <G4UImanager.hh>
 #include <G4VisExecutive.hh>
 #include <G4UIExecutive.hh>
-#include <QGSP_BERT.hh>
 
 #include <ecs/Detector.hh>
+#include <ecs/PhysicsList.hh>
+#include <ecs/ActionInitialization.hh>
 
 class Application {
 public:
@@ -38,7 +39,8 @@ public:
 #endif
 
 		runManager.SetUserInitialization(new ecs::Detector);
-	    runManager.SetUserInitialization(new QGSP_BERT());
+		runManager.SetUserInitialization(new ecs::PhysicsList);
+		runManager.SetUserInitialization(new ecs::ActionInitialization("result.txt"));
 
 		auto uiManager = G4UImanager::GetUIpointer();
 
