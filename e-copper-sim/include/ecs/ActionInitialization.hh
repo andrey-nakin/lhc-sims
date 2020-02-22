@@ -27,20 +27,20 @@
 
 #include "G4VUserActionInitialization.hh"
 
-class G4GeneralParticleSource;
+//class G4GeneralParticleSource;
 
 namespace ecs {
 
 class ActionInitialization: public G4VUserActionInitialization {
 public:
 	ActionInitialization(const G4String&);
-	virtual ~ActionInitialization();
+	~ActionInitialization() override;
 
-	virtual void BuildForMaster() const;
-	virtual void Build() const;
+	void BuildForMaster() const override;
+	void Build() const override;
 
 private:
-	G4String fOutputFileSpec;
+	G4String const fOutputFileSpec;
 };
 
 }

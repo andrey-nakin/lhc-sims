@@ -24,7 +24,6 @@
 // ********************************************************************
 
 #include "globals.hh"
-#include "G4GeneralParticleSource.hh"
 
 #include "ecs/ActionInitialization.hh"
 #include "ecs/RunAction.hh"
