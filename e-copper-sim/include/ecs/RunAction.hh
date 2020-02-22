@@ -19,6 +19,8 @@ public:
 	void BeginOfRunAction(G4Run const*) override;
 	void EndOfRunAction(G4Run const*) override;
 
+	void addDataRecord(DataRecord const&);
+
 private:
 	G4String const fOutputFileSpec;
 	std::vector<DataRecord> data;

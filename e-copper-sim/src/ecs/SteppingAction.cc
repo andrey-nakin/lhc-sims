@@ -6,8 +6,8 @@
 
 namespace ecs {
 
-SteppingAction::SteppingAction(Detector& aDetector) :
-		G4UserSteppingAction(), detector(aDetector) {
+SteppingAction::SteppingAction(Detector& aDetector, RunAction& aRunAction) :
+		G4UserSteppingAction(), detector(aDetector), runAction(aRunAction) {
 }
 
 void SteppingAction::UserSteppingAction(G4Step const* aStep) {
@@ -16,12 +16,13 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 			<< aStep->GetPostStepPoint()->GetPosition().z() / um << ", "
 			<< aStep->GetTotalEnergyDeposit() / eV << ")" << G4endl;
 
-	auto const eDep = aStep->GetTotalEnergyDeposit();
-	if (eDep > 0. && aStep->GetPreStepPoint()->GetPosition().z() >= 0.
+	if (aStep->GetTotalEnergyDeposit() > 0.
+			&& aStep->GetPreStepPoint()->GetPosition().z() >= 0.
 			&& aStep->GetPostStepPoint()->GetPosition().z() > 0.
 			&& aStep->GetPostStepPoint()->GetPosition().z()
 					< detector.getTargetWidth()) {
 		// register energy absorption
+		runAction.addDataRecord(DataRecord(aStep));
 	}
 }
 

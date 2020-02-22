@@ -43,9 +43,10 @@ void ActionInitialization::BuildForMaster() const {
 }
 
 void ActionInitialization::Build() const {
-	SetUserAction(new RunAction(fOutputFileSpec));
+	auto const runAction = new RunAction(fOutputFileSpec);
+	SetUserAction(runAction);
 	SetUserAction(new PrimaryGeneratorAction);
-	SetUserAction(new SteppingAction(detector));
+	SetUserAction(new SteppingAction(detector, *runAction));
 }
 
 }
