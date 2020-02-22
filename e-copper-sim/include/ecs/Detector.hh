@@ -15,6 +15,11 @@ public:
 	Detector();
 
 	G4VPhysicalVolume* Construct() override;
+
+	G4double getTargetWidth() const {
+		return targetWidth;
+	}
+
 };
 
 }

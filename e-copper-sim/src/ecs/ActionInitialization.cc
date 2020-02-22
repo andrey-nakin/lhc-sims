@@ -32,8 +32,10 @@
 
 namespace ecs {
 
-ActionInitialization::ActionInitialization(const G4String& outputFile) :
-		G4VUserActionInitialization(), fOutputFileSpec(outputFile) {
+ActionInitialization::ActionInitialization(const G4String& outputFile,
+		Detector& aDetector) :
+		G4VUserActionInitialization(), fOutputFileSpec(outputFile), detector(
+				aDetector) {
 }
 
 void ActionInitialization::BuildForMaster() const {
@@ -43,7 +45,7 @@ void ActionInitialization::BuildForMaster() const {
 void ActionInitialization::Build() const {
 	SetUserAction(new RunAction(fOutputFileSpec));
 	SetUserAction(new PrimaryGeneratorAction);
-	SetUserAction(new SteppingAction);
+	SetUserAction(new SteppingAction(detector));
 }
 
 }

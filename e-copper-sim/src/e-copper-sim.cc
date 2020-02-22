@@ -38,9 +38,11 @@ public:
 		G4RunManager runManager;
 #endif
 
-		runManager.SetUserInitialization(new ecs::Detector);
+		auto const detector = new ecs::Detector;
+		runManager.SetUserInitialization(detector);
 		runManager.SetUserInitialization(new ecs::PhysicsList);
-		runManager.SetUserInitialization(new ecs::ActionInitialization("result.txt"));
+		runManager.SetUserInitialization(
+				new ecs::ActionInitialization("result.txt", *detector));
 
 		auto uiManager = G4UImanager::GetUIpointer();
 
