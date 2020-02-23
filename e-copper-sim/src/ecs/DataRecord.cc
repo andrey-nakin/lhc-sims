@@ -4,16 +4,16 @@
 namespace ecs {
 
 DataRecord::DataRecord(G4Step const* const aStep) :
-		prePos(aStep->GetPreStepPoint()->GetPosition().z()), postPos(
-				aStep->GetPostStepPoint()->GetPosition().z()), energyDeposit(
+		fPrePos(aStep->GetPreStepPoint()->GetPosition().z()), fPostPos(
+				aStep->GetPostStepPoint()->GetPosition().z()), fEnergyDeposit(
 				aStep->GetTotalEnergyDeposit()) {
 
 }
 
 std::ostream& DataRecord::Print(std::ostream& s) const {
 
-	return s << prePos / um << '\t' << postPos / um << '\t'
-			<< energyDeposit / eV;
+	return s << fPrePos / um << '\t' << fPostPos / um << '\t'
+			<< fEnergyDeposit / eV;
 
 }
 

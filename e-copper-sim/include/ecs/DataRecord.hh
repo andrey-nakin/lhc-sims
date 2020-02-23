@@ -14,8 +14,8 @@ public:
 	static std::ostream& PrintHeader(std::ostream&);
 
 private:
-	G4double prePos, postPos;
-	G4double energyDeposit;
+	const G4double fPrePos, fPostPos;
+	const G4double fEnergyDeposit;
 
 };
 

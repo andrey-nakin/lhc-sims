@@ -14,7 +14,7 @@ public:
 	static std::ostream& PrintHeader(std::ostream&);
 
 private:
-	G4double fInitialEnergy, fRemainingEnergy;
+	const G4double fInitialEnergy, fRemainingEnergy;
 };
 
 }
