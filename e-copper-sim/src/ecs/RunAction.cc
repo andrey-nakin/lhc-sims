@@ -42,4 +42,12 @@ void RunAction::addDataRecord(DataRecord const& aDr) {
 	data.push_back(aDr);
 }
 
+void RunAction::registerPassedParticle() {
+
+}
+
+void RunAction::registerBackScattering() {
+
+}
+
 }
