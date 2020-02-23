@@ -17,4 +17,8 @@ std::ostream& DataRecord::Print(std::ostream& s) const {
 
 }
 
+std::ostream& DataRecord::PrintHeader(std::ostream& s) {
+	return s << "# Start (um)\tStop (um)\tAbsorption (eV)" << G4endl;
+}
+
 }

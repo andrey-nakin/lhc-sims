@@ -18,17 +18,16 @@ G4Run* RunAction::GenerateRun() {
 }
 
 void RunAction::BeginOfRunAction(G4Run const*) {
-	data.clear();
+	fData.clear();
+	fPassed.clear();
+	fBackscattered.clear();
 }
 
 void RunAction::EndOfRunAction(G4Run const* aRun) {
 
-	G4cout << "Number of Events Processed:" << aRun->GetNumberOfEvent()
-			<< G4endl;
-
 	std::ofstream s(fOutputFileSpec);
-	s << "# Start (um)\tStop (um)\tAbsorption (eV)\n";
-	std::for_each(data.begin(), data.end(), [&s](DataRecord const& dr) {
+	DataRecord::PrintHeader(s);
+	std::for_each(fData.begin(), fData.end(), [&s](DataRecord const& dr) {
 		dr.Print(s) << '\n';
 	});
 
@@ -39,15 +38,15 @@ void RunAction::EndOfRunAction(G4Run const* aRun) {
 }
 
 void RunAction::addDataRecord(DataRecord const& aDr) {
-	data.push_back(aDr);
+	fData.push_back(aDr);
 }
 
-void RunAction::registerPassedParticle() {
-
+void RunAction::registerPassedParticle(G4double const remainingEnergy) {
+	fPassed.push_back(ParticleInfo(0., remainingEnergy));
 }
 
-void RunAction::registerBackScattering() {
-
+void RunAction::registerBackScattering(G4double const remainingEnergy) {
+	fBackscattered.push_back(ParticleInfo(0., remainingEnergy));
 }
 
 }

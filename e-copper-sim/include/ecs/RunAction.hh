@@ -4,6 +4,7 @@
 #include "globals.hh"
 
 #include <ecs/DataRecord.hh>
+#include <ecs/ParticleInfo.hh>
 
 class G4Run;
 
@@ -21,11 +22,13 @@ public:
 
 	void addDataRecord(DataRecord const&);
 	void registerPassedParticle(G4double remainingEnergy);
-	void registerBackScattering();
+	void registerBackScattering(G4double remainingEnergy);
 
 private:
 	G4String const fOutputFileSpec;
-	std::vector<DataRecord> data;
+	std::vector<DataRecord> fData;
+	std::vector<ParticleInfo> fPassed;
+	std::vector<ParticleInfo> fBackscattered;
 };
 
 }

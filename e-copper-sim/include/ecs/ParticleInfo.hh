@@ -1,22 +1,20 @@
 #pragma once
 
 #include <iostream>
-#include <G4Step.hh>
+#include <globals.hh>
 
 namespace ecs {
 
-class DataRecord {
+class ParticleInfo {
 public:
 
-	DataRecord(G4Step const* aStep);
+	ParticleInfo(G4double initialEnergy, G4double remainingEnergy);
 
 	std::ostream& Print(std::ostream&) const;
 	static std::ostream& PrintHeader(std::ostream&);
 
 private:
-	G4double prePos, postPos;
-	G4double energyDeposit;
-
+	G4double fInitialEnergy, fRemainingEnergy;
 };
 
 }
