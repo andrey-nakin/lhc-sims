@@ -27,7 +27,9 @@ G4Run* RunAction::GenerateRun() {
 void RunAction::BeginOfRunAction(G4Run const*) {
 
 	fData.clear();
-	fData.resize(35);
+	fData.resize(
+			static_cast<decltype(fData.size())>(fDetector.GetTargetWidth() / um
+					+ 0.5));
 	fPassed.clear();
 	fBackscattered.clear();
 
