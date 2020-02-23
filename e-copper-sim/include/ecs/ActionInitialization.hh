@@ -16,7 +16,7 @@ public:
 
 private:
 	G4String const fOutputFileSpec;
-	Detector& detector;
+	Detector& fDetector;
 };
 
 }

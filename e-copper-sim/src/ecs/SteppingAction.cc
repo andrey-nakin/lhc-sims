@@ -7,7 +7,7 @@
 namespace ecs {
 
 SteppingAction::SteppingAction(Detector& aDetector, RunAction& aRunAction) :
-		G4UserSteppingAction(), detector(aDetector), runAction(aRunAction) {
+		G4UserSteppingAction(), fDetector(aDetector), fRunAction(aRunAction) {
 }
 
 void SteppingAction::UserSteppingAction(G4Step const* aStep) {
@@ -26,23 +26,23 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 	}
 
 	if (aStep->GetPostStepPoint()->GetPosition().z()
-			> detector.getTargetWidth()) {
+			> fDetector.getTargetWidth()) {
 		// particle passed through the target
 		if (aStep->IsFirstStepInVolume()) {
-			runAction.registerPassedParticle(
+			fRunAction.registerPassedParticle(
 					aStep->GetTrack()->GetVertexKineticEnergy(),
 					aStep->GetTrack()->GetKineticEnergy());
 		}
 	} else if (aStep->GetPostStepPoint()->GetPosition().z() < 0.) {
 		// back-scattered particle
 		if (aStep->IsFirstStepInVolume()) {
-			runAction.registerBackScattering(
+			fRunAction.registerBackScattering(
 					aStep->GetTrack()->GetVertexKineticEnergy(),
 					aStep->GetTrack()->GetKineticEnergy());
 		}
 	} else if (aStep->GetTotalEnergyDeposit() > 0.) {
 		// register energy absorption
-		runAction.addDataRecord(DataRecord(aStep));
+		fRunAction.addDataRecord(DataRecord(aStep));
 	}
 }
 

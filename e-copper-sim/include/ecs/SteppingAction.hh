@@ -15,8 +15,8 @@ public:
 	void UserSteppingAction(G4Step const*) override;
 
 private:
-	Detector& detector;
-	RunAction& runAction;
+	Detector& fDetector;
+	RunAction& fRunAction;
 };
 
 }
