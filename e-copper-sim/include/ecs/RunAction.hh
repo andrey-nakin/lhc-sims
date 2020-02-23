@@ -21,8 +21,8 @@ public:
 	void EndOfRunAction(G4Run const*) override;
 
 	void addDataRecord(DataRecord const&);
-	void registerPassedParticle(G4double remainingEnergy);
-	void registerBackScattering(G4double remainingEnergy);
+	void registerPassedParticle(G4double initialEnergy, G4double remainingEnergy);
+	void registerBackScattering(G4double initialEnergy, G4double remainingEnergy);
 
 private:
 	G4String const fOutputFileSpec;

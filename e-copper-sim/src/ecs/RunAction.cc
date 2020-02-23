@@ -10,17 +10,23 @@ namespace ecs {
 
 RunAction::RunAction(G4String const& outputFile) :
 		G4UserRunAction(), fOutputFileSpec(outputFile) {
+
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
+
 }
 
 G4Run* RunAction::GenerateRun() {
+
 	return new Run();
+
 }
 
 void RunAction::BeginOfRunAction(G4Run const*) {
+
 	fData.clear();
 	fPassed.clear();
 	fBackscattered.clear();
+
 }
 
 void RunAction::EndOfRunAction(G4Run const* aRun) {
@@ -38,15 +44,23 @@ void RunAction::EndOfRunAction(G4Run const* aRun) {
 }
 
 void RunAction::addDataRecord(DataRecord const& aDr) {
+
 	fData.push_back(aDr);
+
 }
 
-void RunAction::registerPassedParticle(G4double const remainingEnergy) {
-	fPassed.push_back(ParticleInfo(0., remainingEnergy));
+void RunAction::registerPassedParticle(G4double const initialEnergy,
+		G4double const remainingEnergy) {
+
+	fPassed.push_back(ParticleInfo(initialEnergy, remainingEnergy));
+
 }
 
-void RunAction::registerBackScattering(G4double const remainingEnergy) {
-	fBackscattered.push_back(ParticleInfo(0., remainingEnergy));
+void RunAction::registerBackScattering(G4double const initialEnergy,
+		G4double const remainingEnergy) {
+
+	fBackscattered.push_back(ParticleInfo(initialEnergy, remainingEnergy));
+
 }
 
 }

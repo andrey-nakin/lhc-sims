@@ -17,7 +17,9 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 			<< aStep->GetTotalEnergyDeposit() / eV << ", "
 			<< aStep->IsFirstStepInVolume() << ", "
 			<< aStep->GetTrack()->GetTrackID() << ", "
-			<< aStep->GetTrack()->GetKineticEnergy() / eV << ")" << G4endl;
+			<< aStep->GetTrack()->GetKineticEnergy() / eV << ", "
+			<< aStep->GetTrack()->GetVertexKineticEnergy() / eV << ")"
+			<< G4endl;
 
 	if (aStep->GetTrack()->GetTrackID() != 1) {
 		return;
@@ -25,15 +27,17 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 
 	if (aStep->GetPostStepPoint()->GetPosition().z()
 			> detector.getTargetWidth()) {
+		// particle passed through the target
 		if (aStep->IsFirstStepInVolume()) {
-			// particle passed through the target
 			runAction.registerPassedParticle(
+					aStep->GetTrack()->GetVertexKineticEnergy(),
 					aStep->GetTrack()->GetKineticEnergy());
 		}
 	} else if (aStep->GetPostStepPoint()->GetPosition().z() < 0.) {
+		// back-scattered particle
 		if (aStep->IsFirstStepInVolume()) {
-			// back-scattering particle
 			runAction.registerBackScattering(
+					aStep->GetTrack()->GetVertexKineticEnergy(),
 					aStep->GetTrack()->GetKineticEnergy());
 		}
 	} else if (aStep->GetTotalEnergyDeposit() > 0.) {
