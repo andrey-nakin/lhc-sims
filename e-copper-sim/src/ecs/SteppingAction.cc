@@ -11,16 +11,6 @@ SteppingAction::SteppingAction(Detector& aDetector, RunAction& aRunAction) :
 }
 
 void SteppingAction::UserSteppingAction(G4Step const* aStep) {
-	G4cout << "SteppingAction::UserSteppingAction("
-			<< aStep->GetPreStepPoint()->GetPosition().z() / um << ", "
-			<< aStep->GetPostStepPoint()->GetPosition().z() / um << ", "
-			<< aStep->GetTotalEnergyDeposit() / eV << ", "
-			<< aStep->IsFirstStepInVolume() << ", "
-			<< aStep->GetTrack()->GetTrackID() << ", "
-			<< aStep->GetTrack()->GetKineticEnergy() / eV << ", "
-			<< aStep->GetTrack()->GetVertexKineticEnergy() / eV << ")"
-			<< G4endl;
-
 	if (aStep->GetTrack()->GetTrackID() != 1) {
 		return;
 	}

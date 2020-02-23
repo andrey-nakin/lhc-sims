@@ -4,6 +4,7 @@
 #include <G4SystemOfUnits.hh>
 #include <G4NistManager.hh>
 #include <G4VisAttributes.hh>
+#include <G4UserLimits.hh>
 
 #include <ecs/Detector.hh>
 #include <lhcs/repository/Colours.hh>
@@ -30,6 +31,9 @@ G4VPhysicalVolume* Detector::CreateWorld() {
 	auto const targetLog = new G4LogicalVolume(targetSolid,
 			nist->FindOrBuildMaterial("G4_Cu"), "Target");
 	targetLog->SetVisAttributes(G4VisAttributes(Colours::Copper()));
+	auto const limits = new G4UserLimits;
+	limits->SetMaxAllowedStep(targetWidth / 100);
+	targetLog->SetUserLimits(limits);
 	new G4PVPlacement(nullptr, G4ThreeVector(0., 0., targetWidth / 2),
 			targetLog, "TargetPhys", worldLog, false, 0);
 
