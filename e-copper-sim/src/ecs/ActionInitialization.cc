@@ -19,14 +19,14 @@ void ActionInitialization::BuildForMaster() const {
 
 	SetUserAction(
 			new RunAction(fOutputFileSpec, fPassedFileName,
-					fBackscatteredFileName));
+					fBackscatteredFileName, fDetector));
 
 }
 
 void ActionInitialization::Build() const {
 
 	auto const runAction = new RunAction(fOutputFileSpec, fPassedFileName,
-			fBackscatteredFileName);
+			fBackscatteredFileName, fDetector);
 	SetUserAction(runAction);
 	SetUserAction(new PrimaryGeneratorAction);
 	SetUserAction(new SteppingAction(fDetector, *runAction));

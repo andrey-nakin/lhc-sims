@@ -16,7 +16,7 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 	}
 
 	if (aStep->GetPostStepPoint()->GetPosition().z()
-			> fDetector.getTargetWidth()) {
+			> fDetector.GetTargetWidth()) {
 		// particle passed through the target
 		if (aStep->IsFirstStepInVolume()) {
 			fRunAction.registerPassedParticle(
@@ -32,7 +32,8 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 		}
 	} else if (aStep->GetTotalEnergyDeposit() > 0.) {
 		// register energy absorption
-		fRunAction.addDataRecord(DataRecord(aStep));
+		fRunAction.addDataRecord(aStep->GetPostStepPoint()->GetPosition().z(),
+				aStep->GetTotalEnergyDeposit());
 	}
 }
 

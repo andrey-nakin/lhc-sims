@@ -16,7 +16,7 @@ public:
 
 	G4VPhysicalVolume* Construct() override;
 
-	G4double getTargetWidth() const {
+	G4double GetTargetWidth() const {
 		return targetWidth;
 	}
 
