@@ -8,8 +8,10 @@
 
 namespace ecs {
 
-RunAction::RunAction(G4String const& outputFile) :
-		G4UserRunAction(), fOutputFileSpec(outputFile) {
+RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
+		G4String const& backscatteredFileName) :
+		G4UserRunAction(), fOutputFileSpec(outputFile), fPassedFileName(
+				passedFileName), fBackscatteredFileName(backscatteredFileName) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
@@ -29,18 +31,12 @@ void RunAction::BeginOfRunAction(G4Run const*) {
 
 }
 
-void RunAction::EndOfRunAction(G4Run const* aRun) {
+void RunAction::EndOfRunAction(G4Run const*) {
 
-	std::ofstream s(fOutputFileSpec);
-	DataRecord::PrintHeader(s);
-	std::for_each(fData.begin(), fData.end(), [&s](DataRecord const& dr) {
-		dr.Print(s) << '\n';
-	});
+	Dump(fOutputFileSpec, fData);
+	Dump(fPassedFileName, fPassed);
+	Dump(fBackscatteredFileName, fBackscattered);
 
-	// TODO const Run* theRun = dynamic_cast<const Run*>(aRun);
-	// TODO assert(0 != theRun);
-
-	// TODO theRun->DumpData(fOutputFileSpec);
 }
 
 void RunAction::addDataRecord(DataRecord const& aDr) {

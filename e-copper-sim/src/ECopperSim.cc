@@ -42,7 +42,8 @@ public:
 		runManager.SetUserInitialization(detector);
 		runManager.SetUserInitialization(new ecs::PhysicsList);
 		runManager.SetUserInitialization(
-				new ecs::ActionInitialization("result.txt", *detector));
+				new ecs::ActionInitialization("result.txt", "passed.txt",
+						"backscattered.txt", *detector));
 
 		auto uiManager = G4UImanager::GetUIpointer();
 

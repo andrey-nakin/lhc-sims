@@ -17,7 +17,7 @@ std::ostream& ParticleInfo::Print(std::ostream& s) const {
 
 std::ostream& ParticleInfo::PrintHeader(std::ostream& s) {
 
-	return s << "Initial (eV)\tRemaining (eV)\n";
+	return s << "# Initial (eV)\tRemaining (eV)\n";
 
 }
 

@@ -9,13 +9,14 @@ namespace ecs {
 
 class ActionInitialization: public G4VUserActionInitialization {
 public:
-	ActionInitialization(const G4String&, Detector& detector);
+	ActionInitialization(G4String const&, G4String const& passedFileName,
+			G4String const& backscatteredFileName, Detector& detector);
 
 	void BuildForMaster() const override;
 	void Build() const override;
 
 private:
-	G4String const fOutputFileSpec;
+	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
 };
 
