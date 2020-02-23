@@ -46,7 +46,7 @@ void RunAction::EndOfRunAction(G4Run const*) {
 	auto x = 0.;
 	for (decltype(fData.size()) i = 0; i < fData.size(); i++) {
 		x += fDetector.GetTargetWidth() / fData.size();
-		s << x / um << '\t' << fData[i] << '\n';
+		s << x / um << '\t' << fData[i] / eV << '\n';
 	}
 
 }
