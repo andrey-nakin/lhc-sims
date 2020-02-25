@@ -20,7 +20,10 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						"Energy loss in target", 1000, 0., 1000. * keV, "keV")), fBackscatteredEnergyLossHisto(
 				fAnalysisManager->CreateH1("backscattered-energy-loss",
 						"Energy loss of backscattered particles", 1000, 0.,
-						1000. * keV, "keV")) {
+						1000. * keV, "keV")), fEnergyPerStepHisto(
+				fAnalysisManager->CreateH1("energy-absorption-per-step",
+						"Energy absorption per step", 1000, 0., 10000. * eV,
+						"eV")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
@@ -95,6 +98,8 @@ void RunAction::addDataRecord(G4double const pos, G4double const energy,
 	if (nonIonizationEnergy > 0.) {
 		niEnergyStat(nonIonizationEnergy);
 	}
+
+	fAnalysisManager->FillH1(fEnergyPerStepHisto, energy);
 
 }
 
