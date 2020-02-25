@@ -17,13 +17,17 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 				std::unique_ptr < G4AnalysisManager
 						> (G4Analysis::ManagerInstance("root"))), fEnergyLossHisto(
 				fAnalysisManager->CreateH1("energy-loss",
-						"Energy loss in target", 1000, 0., 1000. * keV, "keV")), fBackscatteredEnergyLossHisto(
+						"Energy loss of passed particles", 1000, 0.,
+						1000. * keV, "keV")), fBackscatteredEnergyLossHisto(
 				fAnalysisManager->CreateH1("backscattered-energy-loss",
 						"Energy loss of backscattered particles", 1000, 0.,
 						1000. * keV, "keV")), fEnergyPerStepHisto(
 				fAnalysisManager->CreateH1("energy-absorption-per-step",
 						"Energy absorption per step", 1000, 0., 10000. * eV,
-						"eV")) {
+						"eV")), fNIEnergyPerStepHisto(
+				fAnalysisManager->CreateH1("ni-energy-absorption-per-step",
+						"Non-ionization energy absorption per step", 1000, 0.,
+						1000. * eV, "eV")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
@@ -64,22 +68,6 @@ void RunAction::EndOfRunAction(G4Run const*) {
 		s << x / um << '\t' << fData[i] / eV << '\n';
 	}
 
-	G4cout << "******************************" << G4endl << "STATISTICS TOTAL"
-			<< G4endl << "******************************" << G4endl
-			<< "Count:\t" << energyStat.GetCount() << G4endl << "Mean, eV:\t"
-			<< energyStat.GetMean() / eV << G4endl << "STD, eV:\t"
-			<< energyStat.GetStd() / eV << G4endl << "Min, eV:\t"
-			<< energyStat.GetMinValue() / eV << G4endl << "Max, eV:\t"
-			<< energyStat.GetMaxValue() / eV << G4endl
-			<< "******************************" << G4endl
-			<< "STATISTICS NON-IONIZATION" << G4endl
-			<< "******************************" << G4endl << "Count:\t"
-			<< niEnergyStat.GetCount() << G4endl << "Mean, eV:\t"
-			<< niEnergyStat.GetMean() / eV << G4endl << "STD, eV:\t"
-			<< niEnergyStat.GetStd() / eV << G4endl << "Min, eV:\t"
-			<< niEnergyStat.GetMinValue() / eV << G4endl << "Max, eV:\t"
-			<< niEnergyStat.GetMaxValue() / eV << G4endl;
-
 	fAnalysisManager->Write();
 	fAnalysisManager->CloseFile();
 
@@ -94,12 +82,12 @@ void RunAction::addDataRecord(G4double const pos, G4double const energy,
 		fData[i] += energy;
 	}
 
-	energyStat(energy);
-	if (nonIonizationEnergy > 0.) {
-		niEnergyStat(nonIonizationEnergy);
+	if (energy > 0.) {
+		fAnalysisManager->FillH1(fEnergyPerStepHisto, energy);
 	}
-
-	fAnalysisManager->FillH1(fEnergyPerStepHisto, energy);
+	if (nonIonizationEnergy > 0.) {
+		fAnalysisManager->FillH1(fNIEnergyPerStepHisto, nonIonizationEnergy);
+	}
 
 }
 

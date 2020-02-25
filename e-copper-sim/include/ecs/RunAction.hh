@@ -8,7 +8,6 @@
 #include <ecs/DataRecord.hh>
 #include <ecs/ParticleInfo.hh>
 #include <ecs/Detector.hh>
-#include <lhcs/math/StatAccum.hh>
 
 class G4Run;
 
@@ -37,12 +36,11 @@ private:
 	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
 	std::unique_ptr<G4AnalysisManager> const fAnalysisManager;
-	G4int const fEnergyLossHisto, fBackscatteredEnergyLossHisto, fEnergyPerStepHisto;
+	G4int const fEnergyLossHisto, fBackscatteredEnergyLossHisto,
+			fEnergyPerStepHisto, fNIEnergyPerStepHisto;
 	std::vector<G4double> fData;
 	std::vector<ParticleInfo> fPassed;
 	std::vector<ParticleInfo> fBackscattered;
-	lhcs::math::StatAccum<G4double, std::vector<G4double>::iterator> energyStat,
-			niEnergyStat;
 
 	template<typename T>
 	void Dump(G4String const& fileName, std::vector<T> const& src) {
