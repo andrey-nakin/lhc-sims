@@ -2,7 +2,6 @@
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 #include <G4SystemOfUnits.hh>
-#include <G4RootAnalysisManager.hh>
 
 #include "ecs/RunAction.hh"
 #include "ecs/Run.hh"
@@ -13,20 +12,14 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 		G4String const& backscatteredFileName, Detector& aDetector) :
 		G4UserRunAction(), fHistFileNameTemplate("run-%03d"), fOutputFileSpec(
 				outputFile), fPassedFileName(passedFileName), fBackscatteredFileName(
-				backscatteredFileName), fDetector(aDetector) {
+				backscatteredFileName), fDetector(aDetector), fAnalysisManager(
+				std::unique_ptr < G4AnalysisManager
+						> (G4Analysis::ManagerInstance("root"))) {
 
-	G4cout << "RunAction::RunAction()" << G4endl;
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
-	auto const analysisManager = G4RootAnalysisManager::Instance();
-	analysisManager->CreateH1("energy-loss", "Energy loss in target",
-			1000, 0., 1000. * keV, "keV");
-}
-
-RunAction::~RunAction() {
-
-	delete G4RootAnalysisManager::Instance();
-
+	fAnalysisManager->CreateH1("energy-loss", "Energy loss in target", 1000, 0.,
+			1000. * keV, "keV");
 }
 
 G4Run* RunAction::GenerateRun() {
@@ -44,10 +37,9 @@ void RunAction::BeginOfRunAction(G4Run const* run) {
 	fPassed.clear();
 	fBackscattered.clear();
 
-	auto const analysisManager = G4RootAnalysisManager::Instance();
 	char buf[256];
 	sprintf(buf, fHistFileNameTemplate, run->GetRunID());
-	analysisManager->OpenFile(buf);
+	fAnalysisManager->OpenFile(buf);
 
 }
 
@@ -81,9 +73,8 @@ void RunAction::EndOfRunAction(G4Run const*) {
 			<< niEnergyStat.GetMinValue() / eV << G4endl << "Max, eV:\t"
 			<< niEnergyStat.GetMaxValue() / eV << G4endl;
 
-	auto const analysisManager = G4RootAnalysisManager::Instance();
-	analysisManager->Write();
-	analysisManager->CloseFile();
+	fAnalysisManager->Write();
+	fAnalysisManager->CloseFile();
 
 }
 
@@ -108,8 +99,7 @@ void RunAction::registerPassedParticle(G4double const initialEnergy,
 
 	fPassed.push_back(ParticleInfo(initialEnergy, remainingEnergy));
 
-	auto const analysisManager = G4RootAnalysisManager::Instance();
-	analysisManager->FillH1(0, initialEnergy - remainingEnergy);
+	fAnalysisManager->FillH1(0, initialEnergy - remainingEnergy);
 
 }
 

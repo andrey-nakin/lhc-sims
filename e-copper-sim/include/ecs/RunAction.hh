@@ -1,7 +1,9 @@
 #pragma once
 
-#include "G4UserRunAction.hh"
-#include "globals.hh"
+#include <memory>
+#include <G4UserRunAction.hh>
+#include <globals.hh>
+#include <g4analysis.hh>
 
 #include <ecs/DataRecord.hh>
 #include <ecs/ParticleInfo.hh>
@@ -17,7 +19,6 @@ class RunAction: public G4UserRunAction {
 public:
 	RunAction(G4String const&, G4String const& passedFileName,
 			G4String const& backscatteredFileName, Detector& aDetector);
-	~RunAction() override;
 
 	G4Run* GenerateRun() override;
 
@@ -34,6 +35,7 @@ private:
 	G4String const fHistFileNameTemplate;
 	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
+	std::unique_ptr<G4AnalysisManager> const fAnalysisManager;
 	std::vector<G4double> fData;
 	std::vector<ParticleInfo> fPassed;
 	std::vector<ParticleInfo> fBackscattered;
