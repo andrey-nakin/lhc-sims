@@ -1,4 +1,6 @@
 /run/initialize
+/run/setCut 100 um
+#/testem/stepMax 1000 um
 
 # Specify particle source
 /gps/energy 1.0 MeV
@@ -6,5 +8,5 @@
 /gps/direction 0. 0. 1.
 /gps/pos/centre 0. 0. 0. cm
 
-/run/beamOn 1000
+/run/beamOn 1000000
 

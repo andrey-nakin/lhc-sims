@@ -33,7 +33,7 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 	} else if (aStep->GetTotalEnergyDeposit() > 0.) {
 		// register energy absorption
 		fRunAction.addDataRecord(aStep->GetPostStepPoint()->GetPosition().z(),
-				aStep->GetTotalEnergyDeposit());
+				aStep->GetTotalEnergyDeposit(), aStep->GetNonIonizingEnergyDeposit ());
 	}
 }
 

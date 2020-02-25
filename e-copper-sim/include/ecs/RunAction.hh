@@ -6,6 +6,7 @@
 #include <ecs/DataRecord.hh>
 #include <ecs/ParticleInfo.hh>
 #include <ecs/Detector.hh>
+#include <lhcs/math/StatAccum.hh>
 
 class G4Run;
 
@@ -22,7 +23,7 @@ public:
 	void BeginOfRunAction(G4Run const*) override;
 	void EndOfRunAction(G4Run const*) override;
 
-	void addDataRecord(G4double pos, G4double energy);
+	void addDataRecord(G4double pos, G4double energy, G4double nonIonizationEnergy);
 	void registerPassedParticle(G4double initialEnergy,
 			G4double remainingEnergy);
 	void registerBackScattering(G4double initialEnergy,
@@ -31,9 +32,10 @@ public:
 private:
 	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
-	std::vector<double> fData;
+	std::vector<G4double> fData;
 	std::vector<ParticleInfo> fPassed;
 	std::vector<ParticleInfo> fBackscattered;
+	lhcs::math::StatAccum<G4double, std::vector<G4double>::iterator> energyStat, niEnergyStat;
 
 	template<typename T>
 	void Dump(G4String const& fileName, std::vector<T> const& src) {
