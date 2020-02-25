@@ -37,7 +37,7 @@ private:
 	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
 	std::unique_ptr<G4AnalysisManager> const fAnalysisManager;
-	G4int const fEnergyLossHisto;
+	G4int const fEnergyLossHisto, fBackscatteredEnergyLossHisto;
 	std::vector<G4double> fData;
 	std::vector<ParticleInfo> fPassed;
 	std::vector<ParticleInfo> fBackscattered;
