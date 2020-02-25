@@ -24,11 +24,13 @@
 // ********************************************************************
 //
 //
+/// \file medical/electronScattering2/include/PhysicsList.hh
+/// \brief Definition of the PhysicsList class
 
 #pragma once
 
-#include <G4VModularPhysicsList.hh>
-#include <globals.hh>
+#include "G4VModularPhysicsList.hh"
+#include "globals.hh"
 
 class G4VPhysicsConstructor;
 
@@ -51,7 +53,7 @@ public:
 
 private:
 
-  PhysicsListMessenger* fMessenger;
+	PhysicsListMessenger* fMessenger;
 
 	G4String fEmName;
 	G4VPhysicsConstructor* fEmPhysicsList;

@@ -4,7 +4,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 project(ECopperSim VERSION 0.1.0 LANGUAGES CXX DESCRIPTION "Geant4-based simulation of electron-induced thin copper foils")
 
-#include(GNUInstallDirs)
 set (CMAKE_CXX_STANDARD 14)
 
 #----------------------------------------------------------------------------
@@ -23,8 +22,7 @@ endif()
 # Setup include directory for this project
 #
 include(${Geant4_USE_FILE})
-include_directories(${PROJECT_SOURCE_DIR}/include)
-#include(GNUInstallDirs)
+include_directories(${PROJECT_SOURCE_DIR}/include ${Geant4_INCLUDE_DIR})
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project

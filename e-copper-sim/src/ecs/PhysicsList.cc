@@ -22,10 +22,13 @@
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
+//
+//
+/// \file medical/electronScattering2/src/PhysicsList.cc
+/// \brief Implementation of the PhysicsList class
 
-#include <ecs/PhysicsList.hh>
+#include "ecs/PhysicsList.hh"
 #include "ecs/PhysicsListMessenger.hh"
-#include "ecs/StepMax.hh"
 
 #include "G4EmStandardPhysics.hh"
 #include "G4EmStandardPhysics_option1.hh"
@@ -38,7 +41,6 @@
 #include "G4EmLivermorePhysics.hh"
 #include "G4EmPenelopePhysics.hh"
 #include "G4EmLowEPPhysics.hh"
-#include "G4Decay.hh"
 
 #include "G4LossTableManager.hh"
 #include "G4UnitsTable.hh"
@@ -71,7 +73,12 @@
 
 #include "G4SystemOfUnits.hh"
 
+#include "G4Decay.hh"
+#include "ecs/StepMax.hh"
+
 namespace ecs {
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsList::PhysicsList() :
 		G4VModularPhysicsList(), fMessenger(0), fEmPhysicsList(0) {
@@ -89,10 +96,14 @@ PhysicsList::PhysicsList() :
 	SetVerboseLevel(1);
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 PhysicsList::~PhysicsList() {
 	delete fEmPhysicsList;
 	delete fMessenger;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::ConstructParticle() {
 	// pseudo-particles
@@ -132,12 +143,16 @@ void PhysicsList::ConstructParticle() {
 	G4GenericIon::GenericIonDefinition();
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void PhysicsList::ConstructProcess() {
 	AddTransportation();
 	fEmPhysicsList->ConstructProcess();
 	AddDecay();
 	AddStepMax();
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::AddDecay() {
 	// Add Decay Process
@@ -163,6 +178,8 @@ void PhysicsList::AddDecay() {
 	}
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void PhysicsList::AddStepMax() {
 	// Step limitation seen as a process
 	StepMax* stepMaxProcess = new StepMax();
@@ -178,6 +195,8 @@ void PhysicsList::AddStepMax() {
 		}
 	}
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsList::AddPhysicsList(const G4String& name) {
 	if (verboseLevel > -1) {
@@ -257,4 +276,7 @@ void PhysicsList::AddPhysicsList(const G4String& name) {
 	}
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 }
+

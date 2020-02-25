@@ -22,6 +22,10 @@
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
+//
+//
+/// \file medical/electronScattering2/include/StepMax.hh
+/// \brief Definition of the StepMax class
 
 #pragma once
 
@@ -44,6 +48,7 @@ public:
 	G4double GetMaxStep() {
 		return fMaxChargedStep;
 	}
+	;
 
 	virtual G4double PostStepGetPhysicalInteractionLength(const G4Track& track,
 			G4double previousStepSize, G4ForceCondition* condition);
@@ -54,6 +59,7 @@ public:
 			G4ForceCondition*) {
 		return 0.;
 	}
+	;     // it is not needed here !
 
 private:
 	G4double fMaxChargedStep;

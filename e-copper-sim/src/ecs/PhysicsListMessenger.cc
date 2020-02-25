@@ -22,14 +22,20 @@
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
+//
+//
+/// \file medical/electronScattering2/src/PhysicsListMessenger.cc
+/// \brief Implementation of the PhysicsListMessenger class
 
+#include "ecs/PhysicsListMessenger.hh"
+
+#include "ecs/PhysicsList.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithAString.hh"
 
-#include "ecs/PhysicsListMessenger.hh"
-#include "ecs/PhysicsList.hh"
-
 namespace ecs {
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys) :
 		G4UImessenger(), fPhysicsList(pPhys), fPListCmd(0) {
@@ -43,10 +49,14 @@ PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys) :
 	fPListCmd->SetToBeBroadcasted(false);
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 PhysicsListMessenger::~PhysicsListMessenger() {
 	delete fPListCmd;
 	delete fPhysDir;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
 		G4String newValue) {
@@ -54,5 +64,7 @@ void PhysicsListMessenger::SetNewValue(G4UIcommand* command,
 		fPhysicsList->AddPhysicsList(newValue);
 	}
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 }

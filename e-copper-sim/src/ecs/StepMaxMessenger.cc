@@ -22,13 +22,19 @@
 // * use  in  resulting  scientific  publications,  and indicate your *
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
-
-#include "G4UIcmdWithADoubleAndUnit.hh"
+//
+//
+/// \file medical/electronScattering2/src/StepMaxMessenger.cc
+/// \brief Implementation of the StepMaxMessenger class
 
 #include "ecs/StepMaxMessenger.hh"
+
 #include "ecs/StepMax.hh"
+#include "G4UIcmdWithADoubleAndUnit.hh"
 
 namespace ecs {
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 StepMaxMessenger::StepMaxMessenger(StepMax* stepM) :
 		G4UImessenger(), fStepMax(stepM), fStepMaxCmd(0) {
@@ -39,14 +45,20 @@ StepMaxMessenger::StepMaxMessenger(StepMax* stepM) :
 	fStepMaxCmd->SetUnitCategory("Length");
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 StepMaxMessenger::~StepMaxMessenger() {
 	delete fStepMaxCmd;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void StepMaxMessenger::SetNewValue(G4UIcommand* command, G4String newValue) {
 	if (command == fStepMaxCmd) {
 		fStepMax->SetMaxStep(fStepMaxCmd->GetNewDoubleValue(newValue));
 	}
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 }
