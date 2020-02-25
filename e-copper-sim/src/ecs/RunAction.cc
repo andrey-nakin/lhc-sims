@@ -2,6 +2,7 @@
 #include "G4Run.hh"
 #include "G4RunManager.hh"
 #include <G4SystemOfUnits.hh>
+#include <G4RootAnalysisManager.hh>
 
 #include "ecs/RunAction.hh"
 #include "ecs/Run.hh"
@@ -10,11 +11,18 @@ namespace ecs {
 
 RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 		G4String const& backscatteredFileName, Detector& aDetector) :
-		G4UserRunAction(), fOutputFileSpec(outputFile), fPassedFileName(
-				passedFileName), fBackscatteredFileName(backscatteredFileName), fDetector(
-				aDetector) {
+		G4UserRunAction(), fHistFileNameTemplate("run-%03d"), fOutputFileSpec(
+				outputFile), fPassedFileName(passedFileName), fBackscatteredFileName(
+				backscatteredFileName), fDetector(aDetector) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
+
+	auto const analysisManager = G4RootAnalysisManager::Instance();
+}
+
+RunAction::~RunAction() {
+
+	delete G4RootAnalysisManager::Instance();
 
 }
 
@@ -24,7 +32,7 @@ G4Run* RunAction::GenerateRun() {
 
 }
 
-void RunAction::BeginOfRunAction(G4Run const*) {
+void RunAction::BeginOfRunAction(G4Run const* run) {
 
 	fData.clear();
 	fData.resize(
@@ -32,6 +40,13 @@ void RunAction::BeginOfRunAction(G4Run const*) {
 					+ 0.5));
 	fPassed.clear();
 	fBackscattered.clear();
+
+	char buf[256];
+	sprintf(buf, fHistFileNameTemplate, run->GetRunID());
+	G4cout << "file name " << buf << G4endl;
+
+	auto const analysisManager = G4RootAnalysisManager::Instance();
+	analysisManager->OpenFile(buf);
 
 }
 
@@ -64,6 +79,11 @@ void RunAction::EndOfRunAction(G4Run const*) {
 			<< niEnergyStat.GetStd() / eV << G4endl << "Min, eV:\t"
 			<< niEnergyStat.GetMinValue() / eV << G4endl << "Max, eV:\t"
 			<< niEnergyStat.GetMaxValue() / eV << G4endl;
+
+	auto const analysisManager = G4RootAnalysisManager::Instance();
+	analysisManager->Write();
+	analysisManager->CloseFile();
+
 }
 
 void RunAction::addDataRecord(G4double const pos, G4double const energy,

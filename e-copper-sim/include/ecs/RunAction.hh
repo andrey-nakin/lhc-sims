@@ -17,6 +17,7 @@ class RunAction: public G4UserRunAction {
 public:
 	RunAction(G4String const&, G4String const& passedFileName,
 			G4String const& backscatteredFileName, Detector& aDetector);
+	~RunAction() override;
 
 	G4Run* GenerateRun() override;
 
@@ -30,6 +31,7 @@ public:
 			G4double remainingEnergy);
 
 private:
+	G4String const fHistFileNameTemplate;
 	G4String const fOutputFileSpec, fPassedFileName, fBackscatteredFileName;
 	Detector& fDetector;
 	std::vector<G4double> fData;
