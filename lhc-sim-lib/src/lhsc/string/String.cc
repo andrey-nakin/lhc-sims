@@ -6,9 +6,6 @@ namespace lhcs {
 
 namespace string {
 
-String::String() {
-}
-
 G4String String::Format(G4String const& fmt, ...) {
 
 	char buffer[1024];

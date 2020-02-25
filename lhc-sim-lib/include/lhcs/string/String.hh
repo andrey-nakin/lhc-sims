@@ -6,9 +6,9 @@ namespace lhcs {
 
 namespace string {
 
-class String {
+class String final {
 
-	String();
+	String() = delete;
 
 public:
 
