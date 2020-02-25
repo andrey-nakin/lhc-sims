@@ -15,12 +15,12 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 				outputFile), fPassedFileName(passedFileName), fBackscatteredFileName(
 				backscatteredFileName), fDetector(aDetector), fAnalysisManager(
 				std::unique_ptr < G4AnalysisManager
-						> (G4Analysis::ManagerInstance("root"))) {
+						> (G4Analysis::ManagerInstance("root"))), fEnergyLossHisto(
+				fAnalysisManager->CreateH1("energy-loss",
+						"Energy loss in target", 1000, 0., 1000. * keV, "keV")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
-	fAnalysisManager->CreateH1("energy-loss", "Energy loss in target", 1000, 0.,
-			1000. * keV, "keV");
 }
 
 G4Run* RunAction::GenerateRun() {
@@ -100,7 +100,7 @@ void RunAction::registerPassedParticle(G4double const initialEnergy,
 
 	fPassed.push_back(ParticleInfo(initialEnergy, remainingEnergy));
 
-	fAnalysisManager->FillH1(0, initialEnergy - remainingEnergy);
+	fAnalysisManager->FillH1(fEnergyLossHisto, initialEnergy - remainingEnergy);
 
 }
 
