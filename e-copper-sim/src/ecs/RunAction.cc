@@ -5,6 +5,7 @@
 
 #include "ecs/RunAction.hh"
 #include "ecs/Run.hh"
+#include "lhcs/string/String.hh"
 
 namespace ecs {
 
@@ -37,9 +38,9 @@ void RunAction::BeginOfRunAction(G4Run const* run) {
 	fPassed.clear();
 	fBackscattered.clear();
 
-	char buf[256];
-	sprintf(buf, fHistFileNameTemplate, run->GetRunID());
-	fAnalysisManager->OpenFile(buf);
+	fAnalysisManager->OpenFile(
+			lhcs::string::String::Format(fHistFileNameTemplate,
+					run->GetRunID()));
 
 }
 
