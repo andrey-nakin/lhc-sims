@@ -25,7 +25,7 @@ public:
 	void EndOfRunAction(G4Run const*) override;
 
 	void addDataRecord(G4double pos, G4double energy,
-			G4double nonIonizationEnergy);
+			G4double nonIonizationEnergy, G4double stepLen);
 	void registerPassedParticle(G4double initialEnergy,
 			G4double remainingEnergy);
 	void registerBackScattering(G4double initialEnergy,
@@ -37,7 +37,7 @@ private:
 	Detector& fDetector;
 	std::unique_ptr<G4AnalysisManager> const fAnalysisManager;
 	G4int const fEnergyLossHisto, fBackscatteredEnergyLossHisto,
-			fEnergyPerStepHisto, fNIEnergyPerStepHisto;
+			fEnergyPerStepHisto, fNIEnergyPerStepHisto, fStepLengthHisto;
 	std::vector<G4double> fData;
 	std::vector<ParticleInfo> fPassed;
 	std::vector<ParticleInfo> fBackscattered;

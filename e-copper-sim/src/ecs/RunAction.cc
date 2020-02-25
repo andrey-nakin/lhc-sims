@@ -23,11 +23,14 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						"Energy loss of backscattered particles", 1000, 0.,
 						1000. * keV, "keV")), fEnergyPerStepHisto(
 				fAnalysisManager->CreateH1("energy-absorption-per-step",
-						"Energy absorption per step", 1000, 0., 10000. * eV,
+						"Energy absorption per MC step", 1000, 0., 10000. * eV,
 						"eV")), fNIEnergyPerStepHisto(
 				fAnalysisManager->CreateH1("ni-energy-absorption-per-step",
-						"Non-ionization energy absorption per step", 1000, 0.,
-						1000. * eV, "eV")) {
+						"Non-ionization energy absorption per MC step", 1000, 0.,
+						1000. * eV, "eV")), fStepLengthHisto(
+				fAnalysisManager->CreateH1("mc-step-length",
+						"Monte-Carlo step length within target", 350, 0.,
+						35. * um, "um")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
@@ -74,7 +77,7 @@ void RunAction::EndOfRunAction(G4Run const*) {
 }
 
 void RunAction::addDataRecord(G4double const pos, G4double const energy,
-		G4double const nonIonizationEnergy) {
+		G4double const nonIonizationEnergy, G4double const stepLen) {
 
 	auto const i = static_cast<decltype(fData.size())>(pos
 			/ fDetector.GetTargetWidth() * fData.size());
@@ -88,6 +91,7 @@ void RunAction::addDataRecord(G4double const pos, G4double const energy,
 	if (nonIonizationEnergy > 0.) {
 		fAnalysisManager->FillH1(fNIEnergyPerStepHisto, nonIonizationEnergy);
 	}
+	fAnalysisManager->FillH1(fStepLengthHisto, stepLen);
 
 }
 
