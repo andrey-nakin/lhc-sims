@@ -29,8 +29,8 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						"Non-ionization energy absorption per MC step", 1000, 0.,
 						1000. * eV, "eV")), fStepLengthHisto(
 				fAnalysisManager->CreateH1("mc-step-length",
-						"Monte-Carlo step length within target", 350, 0.,
-						35. * um, "um")) {
+						"Monte-Carlo step length within target", 1000, 0.,
+						10. * um, "um")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100000);
 
