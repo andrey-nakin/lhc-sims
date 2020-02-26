@@ -26,8 +26,8 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						"Energy absorption per MC step", 1000, 0., 10000. * eV,
 						"eV")), fNIEnergyPerStepHisto(
 				fAnalysisManager->CreateH1("ni-energy-absorption-per-step",
-						"Non-ionization energy absorption per MC step", 1000, 0.,
-						1000. * eV, "eV")), fStepLengthHisto(
+						"Non-ionization energy absorption per MC step", 1000,
+						0., 1000. * eV, "eV")), fStepLengthHisto(
 				fAnalysisManager->CreateH1("mc-step-length",
 						"Monte-Carlo step length within target", 1000, 0.,
 						10. * um, "um")) {
@@ -44,6 +44,8 @@ G4Run* RunAction::GenerateRun() {
 
 void RunAction::BeginOfRunAction(G4Run const* run) {
 
+	using namespace lhcs::string;
+
 	fData.clear();
 	fData.resize(
 			static_cast<decltype(fData.size())>(fDetector.GetTargetWidth() / um
@@ -52,17 +54,19 @@ void RunAction::BeginOfRunAction(G4Run const* run) {
 	fBackscattered.clear();
 
 	fAnalysisManager->OpenFile(
-			lhcs::string::String::Format(fHistFileNameTemplate,
-					run->GetRunID()));
+			String::Format(fHistFileNameTemplate, run->GetRunID()));
 
 }
 
-void RunAction::EndOfRunAction(G4Run const*) {
+void RunAction::EndOfRunAction(G4Run const* run) {
 
-	Dump(fPassedFileName, fPassed);
-	Dump(fBackscatteredFileName, fBackscattered);
+	using namespace lhcs::string;
 
-	std::ofstream s(fOutputFileSpec);
+	Dump(String::Format(fPassedFileName, run->GetRunID()), fPassed);
+	Dump(String::Format(fBackscatteredFileName, run->GetRunID()),
+			fBackscattered);
+
+	std::ofstream s(String::Format(fOutputFileSpec, run->GetRunID()));
 	s << "# Pos (um)\tEnergy (eV)\n";
 
 	auto x = 0.;
