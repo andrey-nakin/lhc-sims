@@ -32,7 +32,7 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						"Monte-Carlo step length within target", 1000, 0.,
 						10. * um, "um")) {
 
-	G4RunManager::GetRunManager()->SetPrintProgress(100000);
+	G4RunManager::GetRunManager()->SetPrintProgress(100);
 
 }
 
