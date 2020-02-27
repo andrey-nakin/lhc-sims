@@ -5,7 +5,6 @@
 #include <globals.hh>
 #include <g4analysis.hh>
 
-#include <ecs/DataRecord.hh>
 #include <ecs/ParticleInfo.hh>
 #include <ecs/Detector.hh>
 
