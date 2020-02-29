@@ -12,7 +12,8 @@
 namespace ecs {
 
 Detector::Detector() :
-		wordRadius(5. * cm), targetWidth(35. * um) {
+		wordRadius(5. * cm), targetWidth(35. * um), fTargetMaterial(
+				G4NistManager::Instance()->FindOrBuildMaterial("G4_Cu")) {
 
 }
 
@@ -28,8 +29,8 @@ G4VPhysicalVolume* Detector::CreateWorld() {
 
 	auto const targetSolid = new G4Tubs("TargetSolid", 0. * cm, wordRadius,
 			targetWidth / 2, 0. * deg, 360. * deg);
-	auto const targetLog = new G4LogicalVolume(targetSolid,
-			nist->FindOrBuildMaterial("G4_Cu"), "Target");
+	auto const targetLog = new G4LogicalVolume(targetSolid, fTargetMaterial,
+			"Target");
 	targetLog->SetVisAttributes(G4VisAttributes(Colours::Copper()));
 	auto const limits = new G4UserLimits;
 	limits->SetMaxAllowedStep(targetWidth / 100);
