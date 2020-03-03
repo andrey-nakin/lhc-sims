@@ -11,7 +11,9 @@ SteppingAction::SteppingAction(Detector& aDetector, RunAction& aRunAction) :
 }
 
 void SteppingAction::UserSteppingAction(G4Step const* aStep) {
-	if (aStep->GetTrack()->GetTrackID() != 1) {
+	auto const track = aStep->GetTrack();
+
+	if (track->GetTrackID() != 1) {
 		return;
 	}
 
@@ -19,22 +21,29 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 			> fDetector.GetTargetWidth()) {
 		// particle passed through the target
 		if (aStep->IsFirstStepInVolume()) {
-			fRunAction.registerPassedParticle(
-					aStep->GetTrack()->GetVertexKineticEnergy(),
-					aStep->GetTrack()->GetKineticEnergy());
+			fRunAction.registerPassedParticle(track->GetVertexKineticEnergy(),
+					track->GetKineticEnergy());
 		}
+		track->SetTrackStatus(fStopAndKill);
+		return;
 	} else if (aStep->GetPostStepPoint()->GetPosition().z() < 0.) {
 		// back-scattered particle
 		if (aStep->IsFirstStepInVolume()) {
-			fRunAction.registerBackScattering(
-					aStep->GetTrack()->GetVertexKineticEnergy(),
-					aStep->GetTrack()->GetKineticEnergy());
+			fRunAction.registerBackScattering(track->GetVertexKineticEnergy(),
+					track->GetKineticEnergy());
 		}
+		track->SetTrackStatus(fStopAndKill);
+		return;
 	} else if (aStep->GetTotalEnergyDeposit() > 0.) {
 		// register energy absorption
 		fRunAction.addDataRecord(aStep->GetPostStepPoint()->GetPosition().z(),
 				aStep->GetTotalEnergyDeposit(),
 				aStep->GetNonIonizingEnergyDeposit(), aStep->GetStepLength());
+
+//		auto const dr = aStep->GetPostStepPoint()->GetPosition()
+//				- aStep->GetPreStepPoint()->GetPosition();
+//		auto const dv = dr.x() * dr.y() * dr.z();
+//		auto const dm = dv * fDetector.GetTargetMaterial()->GetDensity();
 	}
 }
 
