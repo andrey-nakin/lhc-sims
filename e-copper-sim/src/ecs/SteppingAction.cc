@@ -10,7 +10,7 @@ SteppingAction::SteppingAction(Detector& aDetector, RunAction& aRunAction) :
 		G4UserSteppingAction(), fDetector(aDetector), fRunAction(aRunAction) {
 }
 
-void SteppingAction::UserSteppingAction(G4Step const* aStep) {
+void SteppingAction::UserSteppingAction(G4Step const* const aStep) {
 	auto const track = aStep->GetTrack();
 
 	if (track->GetTrackID() != 1) {
@@ -39,11 +39,6 @@ void SteppingAction::UserSteppingAction(G4Step const* aStep) {
 		fRunAction.addDataRecord(aStep->GetPostStepPoint()->GetPosition().z(),
 				aStep->GetTotalEnergyDeposit(),
 				aStep->GetNonIonizingEnergyDeposit(), aStep->GetStepLength());
-
-//		auto const dr = aStep->GetPostStepPoint()->GetPosition()
-//				- aStep->GetPreStepPoint()->GetPosition();
-//		auto const dv = dr.x() * dr.y() * dr.z();
-//		auto const dm = dv * fDetector.GetTargetMaterial()->GetDensity();
 	}
 }
 

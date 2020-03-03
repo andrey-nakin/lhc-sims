@@ -18,8 +18,6 @@ public:
 	RunAction(G4String const&, G4String const& passedFileName,
 			G4String const& backscatteredFileName, Detector& aDetector);
 
-	G4Run* GenerateRun() override;
-
 	void BeginOfRunAction(G4Run const*) override;
 	void EndOfRunAction(G4Run const*) override;
 

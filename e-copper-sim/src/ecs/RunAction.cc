@@ -4,7 +4,6 @@
 #include <G4SystemOfUnits.hh>
 
 #include "ecs/RunAction.hh"
-#include "ecs/Run.hh"
 #include "lhcs/string/String.hh"
 
 namespace ecs {
@@ -33,12 +32,6 @@ RunAction::RunAction(G4String const& outputFile, G4String const& passedFileName,
 						10. * um, "um")) {
 
 	G4RunManager::GetRunManager()->SetPrintProgress(100);
-
-}
-
-G4Run* RunAction::GenerateRun() {
-
-	return new Run();
 
 }
 
