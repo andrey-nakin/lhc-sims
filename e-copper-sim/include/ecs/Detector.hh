@@ -15,7 +15,7 @@ public:
 	G4VPhysicalVolume* Construct() override;
 
 	G4double GetTargetWidth() const {
-		return targetWidth;
+		return fTargetWidth;
 	}
 
 	G4Material const* GetTargetMaterial() const {
@@ -24,8 +24,8 @@ public:
 
 private:
 
-	G4double wordRadius;
-	G4double targetWidth;
+	G4double fWordRadius;
+	G4double fTargetWidth;
 	G4Material* const fTargetMaterial;
 
 };
